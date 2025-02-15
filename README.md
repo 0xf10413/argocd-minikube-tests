@@ -76,4 +76,5 @@ Taken from https://github.com/argoproj/argocd-example-apps.git.
 Install the application on the two clusters:
 ```bash
 argocd appset create guestbook/appset-guestbook.yaml
+argocd app sync guestbook-{primary,secondary}
 ```

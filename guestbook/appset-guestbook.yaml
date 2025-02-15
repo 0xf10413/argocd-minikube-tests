@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+spec:
+  generators:
+  - list: 
+      elements: 
+      - cluster: primary
+      - cluster: secondary
+  template: 
+    metadata:
+      name: 'guestbook-{{cluster}}'
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/argoproj/argocd-example-apps.git
+        targetRevision: HEAD
+        path: guestbook
+      destination:
+        name: '{{ cluster }}'
+        namespace: guestbook
