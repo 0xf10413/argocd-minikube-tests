@@ -65,7 +65,8 @@ Bootstrap is now done, everything else can be driven via argocd now.
 
 This contains most pre-required definitions for all other apps, including basic namespaces.
 ```bash
-argocd app create prerequisites/app.yaml
+argocd appset create prerequisites/appset-prerequisites.yaml
+argocd app sync prerequisites-{primary,secondary}
 ```
 
 == Guestbook sample app ==

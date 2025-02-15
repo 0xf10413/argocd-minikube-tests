@@ -10,7 +10,7 @@ spec:
       - cluster: secondary
   template: 
     metadata:
-      name: '{{ cluster }}-prerequisites'
+      name: 'prerequisites-{{ cluster }}'
       finalizers:
       - resources-finalizer.argocd.argoproj.io
     spec:
@@ -21,4 +21,7 @@ spec:
         path: prerequisites/manifests
       destination:
         name: '{{ cluster }}'
-        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
