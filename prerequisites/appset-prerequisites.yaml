@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prerequisites
+spec:
+  generators:
+  - list: 
+      elements: 
+      - cluster: primary
+      - cluster: secondary
+  template: 
+    metadata:
+      name: '{{ cluster }}-prerequisites'
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/0xf10413/argocd-minikube-tests
+        targetRevision: HEAD
+        path: prerequisites/manifests
+      destination:
+        name: '{{ cluster }}'
+        namespace: default
